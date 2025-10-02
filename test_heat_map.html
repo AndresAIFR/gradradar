@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Heat Map Navigation</title>
+</head>
+<body>
+    <h1>Testing Heat Map Navigation</h1>
+    
+    <h2>Test URLs:</h2>
+    <ul>
+        <li><a href="http://localhost:5000/alumni?supportCategory=High%20Needs&currentStage=yr1-enrolled" target="_blank">High Needs + Year 1 Enrolled</a></li>
+        <li><a href="http://localhost:5000/alumni?supportCategory=Medium%20Needs&currentStage=graduated" target="_blank">Medium Needs + Graduated</a></li>
+        <li><a href="http://localhost:5000/alumni?supportCategory=Low%20Needs&employed=true" target="_blank">Low Needs + Employed</a></li>
+        <li><a href="http://localhost:5000/alumni?supportCategory=High%20Needs" target="_blank">High Needs Only</a></li>
+    </ul>
+    
+    <h2>API Test:</h2>
+    <button onclick="testAPI()">Test API Filtering</button>
+    <div id="result"></div>
+    
+    <script>
+        async function testAPI() {
+            try {
+                const response = await fetch('/api/alumni/paginated?page=1&limit=5&supportCategory=High%20Needs&currentStage=yr1-enrolled');
+                const data = await response.json();
+                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(data, null, 2).substring(0, 500) + '...</pre>';
+            } catch (error) {
+                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

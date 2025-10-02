@@ -1,0 +1,31 @@
+node_modules
+dist
+.DS_Store
+server/public
+vite.config.ts.*
+*.tar.gz
+
+# Secrets / env
+.env
+.env.*
+
+# Logs & caches
+*.log
+.repl-backups/
+
+# User uploads / attachments (PII risk)
+uploads/
+attached_assets/
+
+# Cookie/session dumps
+*cookie*.txt
+cookies.txt
+temp_cookies.txt
+admin_cookies.txt
+session.txt
+
+# Build output
+dist
+
+# Local sample data
+/test_flag_import.csv

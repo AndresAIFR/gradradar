@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Avatar Images</title>
+    <style>
+        img { width: 100px; height: 100px; object-fit: cover; border-radius: 50%; margin: 10px; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Debug Avatar Images</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function testAvatars() {
+            const results = document.getElementById('results');
+            
+            try {
+                const response = await fetch('/api/alumni');
+                const alumni = await response.json();
+                
+                alumni.forEach(alumnus => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        <h3>${alumnus.firstName} ${alumnus.lastName}</h3>
+                        <p>ID: ${alumnus.id}</p>
+                    `;
+                    
+                    if (alumnus.profileImageUrl) {
+                        const img = document.createElement('img');
+                        img.src = alumnus.profileImageUrl;
+                        img.onload = () => {
+                            const status = document.createElement('p');
+                            status.className = 'success';
+                            status.textContent = 'Image loaded successfully';
+                            div.appendChild(status);
+                        };
+                        img.onerror = () => {
+                            const status = document.createElement('p');
+                            status.className = 'error';
+                            status.textContent = 'Image failed to load';
+                            div.appendChild(status);
+                        };
+                        div.appendChild(img);
+                    } else {
+                        const status = document.createElement('p');
+                        status.textContent = 'No image URL';
+                        div.appendChild(status);
+                    }
+                    
+                    results.appendChild(div);
+                });
+            } catch (error) {
+                results.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        }
+        
+        testAvatars();
+    </script>
+</body>
+</html>
