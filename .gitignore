@@ -29,3 +29,5 @@ dist
 
 # Local sample data
 /test_flag_import.csv
+
+server/routes-simple.ts
